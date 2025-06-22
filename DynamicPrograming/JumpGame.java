@@ -24,8 +24,38 @@ public class JumpGame {
          dp[index] = 0;
          return false;
     }
+    static boolean jumpTab(int []nums){
+        int n = nums.length;
+        boolean []dp = new boolean[n];
+        dp[n-1] = true;
+        for(int i = n-2;i>=0;i--){
+            for(int j=1;j<=nums[i]&&i+j<=n;j++){
+              if(dp[i+j]==true){
+                dp[i] = true;
+                break;
+              }
+            }
+        }
+        return dp[0];
+        
+    }
+    static boolean jumpsGreed(int []nums){
+          int maxi = 0;
+          for(int i =0;i<nums.length;i++){
+            if(i>maxi){
+                return false;
+            }
+            maxi = Math.max(maxi,nums[i]+i);
+            if(maxi>=nums.length-1){
+                return true;
+            }
+          }
+          return false;
+    }
     public static void main(String[] args) {
        int []nums = {2,3,1,1,4}; //OP=> true 
        System.out.println(jump(nums));  
+       System.out.println(jumpTab(nums));
+       System.out.println(jumpsGreed(nums));
     }
 }
